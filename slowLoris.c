@@ -14,7 +14,7 @@ typedef struct {
 	struct sockaddr_in addr;
 } tredi_args;
 
-char header[1024] = "GET /toto HTTP/1.1\r\nHost: 127.0.0.1\r\nUser-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0 .NET CLR 1.1.4322; .NET CLR 2.0.503l3; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; MSOffice 12)\r\nContent-Length: 42\r\n";
+char header[1024] = "GET /toto HTTP/1.1\r\nHost: 127.0.0.1\r\nUser-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0 .NET CLR 1.1.4322; .NET CLR 2.0.503l3; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; MSOffice 12)\r\nConnection:keep-alive\r\nContent-Length: 42\r\n";
 char keep_alive[16] = "X-a: b\r\n";
 
 void *tredi(void *args){
@@ -37,7 +37,7 @@ void *tredi(void *args){
 	}
 
 	while(1){
-		if(send(ls, keep_alive, strlen(keep_alive), 0) == -1){
+		if(send(ls, header, strlen(header), 0) == -1){
 			perror("send()");
 			pthread_exit(NULL);
 		}
