@@ -60,6 +60,8 @@ int main(int argc, char *argv[]){
 	for(int i = 0; i < MAX_T; i++){
 		pthread_create(&a, NULL, tredi, (void*)&arg);
 	}
+
+	while(1);
 	
 	return 0;
 }
