@@ -59,6 +59,7 @@ int main(int argc, char *argv[]){
 	pthread_t a;
 	while(1){
 		pthread_create(&a, NULL, tredi, (void*)&arg);
+		usleep(500000);
 	}
 
 	return 0;
