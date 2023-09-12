@@ -7,7 +7,7 @@
 #include <string.h>
 
 #define TIMEOUT 1
-#define MAX_T 500
+#define MAX_T 215
 
 unsigned short n_threads= 0;
 pthread_mutex_t mutex;
@@ -72,14 +72,14 @@ int main(int argc, char *argv[]){
 
 	pthread_t a;
 	while(1){
-		if(n_threads < 500){
+		if(n_threads < MAX_T){
 			pthread_create(&a, NULL, tredi, (void*)&arg);
 			pthread_mutex_lock(&mutex);
 			n_threads++;
 			pthread_mutex_unlock(&mutex);
 		} else sleep(2);
 	}
-	printf("%d\n", n_threads);
 
+	printf("fim\n");
 	return 0;
 }
