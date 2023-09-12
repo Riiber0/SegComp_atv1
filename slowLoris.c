@@ -79,6 +79,7 @@ int main(int argc, char *argv[]){
 			pthread_mutex_unlock(&mutex);
 		}
 	}
+	perror("saida");
 
 	return 0;
 }
