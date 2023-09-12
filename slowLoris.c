@@ -57,11 +57,9 @@ int main(int argc, char *argv[]){
 	arg.addr = addr;
 
 	pthread_t a;
-	for(int i = 0; i < MAX_T; i++){
+	while(1){
 		pthread_create(&a, NULL, tredi, (void*)&arg);
 	}
 
-	while(1);
-	
 	return 0;
 }
