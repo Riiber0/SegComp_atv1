@@ -77,7 +77,7 @@ int main(int argc, char *argv[]){
 			pthread_mutex_lock(&mutex);
 			n_threads++;
 			pthread_mutex_unlock(&mutex);
-		}
+		} else sleep(2);
 	}
 	printf("%d\n", n_threads);
 
