@@ -104,6 +104,14 @@ void *tredi(void *args){
 		pthread_mutex_unlock(&mutex);
 		pthread_exit(NULL);	
 	}
+	int sOption = 1;
+	if (setsockopt(sockfd, IPPROTO_IP, IP_HDRINCL, &sOption, sizeof(sOption)) == -1){
+		perror("setsockopt");
+		pthread_mutex_lock(&mutex);
+		n_threads--;
+		pthread_mutex_unlock(&mutex);
+		pthread_exit(NULL);	
+	}
 	
 	unsigned char pack[256];
 	struct iphdr *ip_headers = (struct iphdr *) pack;
