@@ -49,6 +49,7 @@ void *tredi(void *args){
 
 	while(1){
 		if(send(ls, header, strlen(header), 0) == -1){
+			connect(ls, (struct sockaddr*)&args_t.addr, sizeof(args_t.addr));
 			perror("send()");
 			pthread_mutex_lock(&mutex);
 			n_threads--;
